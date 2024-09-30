@@ -3,39 +3,43 @@
 
 function setup() {
   createCanvas(400, 400);
-  let npts = 60;
+  let npts = 8;
   let xmin = 50, xmax = 350, ymin = 50, ymax = 350, sortX_TF = true;
   let p = pointArray(npts, xmin, xmax, ymin, ymax, sortX_TF);
 
+  p = [[54,283],[122,248],[204,134],[219,180],[248,153],[284,349],[285,329],[291,212]]; //test data
 
   /*the points are sorted. abbreviate convex hull = CH(P)
   1) The leftmost point (1st one in the sorted list) is on the CH(P).
-  2) Imagine a line segment (edge) between it and the next point.
-  3) Now get a 3rd Point, and a 4th, and a 5th . . .
-  4) If any of those points lie to the LEFT of our segement (edge) then that edge cannot be on CH(P).
-  5) But if none lie to the LEFT, then that edge is on CH(P).
-  6) So add it.
-  7) Do 2) thru 6) for all ordered pairs.  It is slow but effective.
+  2) Put the points p1 and p2 in a list Lupper with p1 and the first point.
+  3) for i <-- 3 to n
+  4)    do Append pi to Lupper.
+  5)        while Lupper contains more than two points AND the last three points
+                  in Lupper do not make a right turn
+  6)           do Delete the middle of the last three points from Lupper
+  7) Put the points p(n) and p(n-1) in a list Llower, with p(n) as the first point.
+  8) for i <-- (n-2) downto 1
+  9)    do Append p(i) to Llower.
+  10)       while Llower contains more than two points AND the last three points 
+                  in Llower do not make a right turn.
+  11)              do Delete the middle of the last three points from Llower.
+  12) Remove the first and the last point from Llower to avoid duplicatyion 
+           of the points where the upper and lower hull meet.  
+  13) Append Llower to Lupper, and call the resulting list L
+  14) return L  
   */
 
+  let Lu = [p[0],p[1]]; nLu=1; //nLu is the index
+  for (let i=2; i<p.length; i++){                      //step 3
+    Lu.push(p[i]);  nLu = nLu + 1;                                 //step 4
+    if (rightOrLeft(Lu[nLu-2],Lu[nLu-1],Lu[nLu]) != "RIGHT") { //is p[i] to the LEFT of segment (p[i-2],p[i-1]) step 5
+      let ar = Lu.splice(i-1,1); nLu=nLu-1;                           //step 6 remove p(i-1) frm Lu                                
+    } //end if
+    console.log('i=',i,' Lu=',Lu);
+    break;
+  } //end for i
 
-  let valid;
-  let E = []; //lets create a list of edges around the convex hull
-  for (let i = 0; i < p.length; i++) {
-    for (let j = 0; j < p.length; j++) {
-      if (i != j) {
-        valid = true;
-        for (let r = 0; r < p.length; r++) {
-          if (r != i && r != j) {
-            if (rightOrLeft(p[i], p[j], p[r]) == "LEFT") { valid = false; }
-          }//end if
-        }// end for r
-        if (valid) {
-          E.push([p[i], p[j]]); //this is an edge not a point
-        }
-      }//end if
-    }//end for j
-  }// end for i
+ 
 
 
 
@@ -45,24 +49,15 @@ function setup() {
   drawPts(p);
   fill("white");
   circle(p[0][0], p[0][1], 10); //our first point
-  circle(p[1][0], p[1][1], 7); //our second point
-
   
-//Now put the edges into clockwise order.
-  //show the original edge array
-  console.log('Original Edge array')
-  for (let i = 0; i < E.length; i++) {
-    console.log(E[i][0][0], E[i][0][1], E[i][1][0], E[i][1][1])
-  }
+  connectTheDots(Lu);
 
-  let newE = arrangeEdgesCW(E);
-  //show the arranged edge array
-  console.log('ClockWise arrangement for the edge array')
-  for (let i = 0; i < newE.length; i++) {
-    console.log(newE[i][0][0], newE[i][0][1], newE[i][1][0], newE[i][1][1])
+  //show the pts
+  for(let i=0; i<p.length; i++){
+    console.log(p[i]);
   }
-  console.log(newE);
-  connectEdges(newE);
+  
+
 
 }
 
