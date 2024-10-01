@@ -3,7 +3,7 @@
 
 function setup() {
   createCanvas(400, 400);
-  let npts = 100000;
+  let npts = 600;
   let xmin = 50, xmax = 350, ymin = 50, ymax = 350, sortX_TF = true;
   let p = pointArray(npts, xmin, xmax, ymin, ymax, sortX_TF);
 
