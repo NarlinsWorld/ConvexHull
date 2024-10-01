@@ -1,9 +1,28 @@
 //Graph a field of points (x y vertices) and then draw the convex hull around them.
 
 
+function myFunc(){
+  return document.getElementById('npts').value;
+
+}
+
+let npts;
+//document.getElementById("npts").addEventListener("change", myFunc,false);
+
 function setup() {
+  
   createCanvas(400, 400);
-  let npts = 600;
+}
+
+function draw(){
+  console.log("npts=", npts);
+  makeHull();
+  noLoop();
+}
+
+function makeHull(){
+  npts = myFunc();
+  
   let xmin = 50, xmax = 350, ymin = 50, ymax = 350, sortX_TF = true;
   let p = pointArray(npts, xmin, xmax, ymin, ymax, sortX_TF);
 
@@ -112,6 +131,7 @@ function setup() {
 
 
 }
+
 
 
 /*function to remove 1 element from an array
