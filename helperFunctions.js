@@ -31,6 +31,10 @@ function randomIntFromInterval(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+function randomRealFromInterval(min, max){
+  return Math.random() * (max - min +1) + min;
+}
+
 /* return a randomly chosen array of (x,y) pairs. The values will be integer and between
 xmin xmax and ymin ymax. 
 
@@ -42,11 +46,11 @@ function pointArray(npts, xmin, xmax, ymin, ymax, sortX_TF) { //if sortX_TF is t
   let plocal = [];
   for (let i = 0; i < npts; i++) {
     plocal.push(
-      [randomIntFromInterval(xmin, xmax),
-      randomIntFromInterval(ymin, ymax)]);
+      [randomRealFromInterval(xmin, xmax),
+      randomRealFromInterval(ymin, ymax)]);
   }
   if (sortX_TF){
-    plocal.sort((a,b)=>b[1]-a[1]); // reverse sort on the y coordinate in order to break any ties in x
+    plocal.sort((a,b)=>a[1]-b[1]); // reverse sort on the y coordinate in order to break any ties in x
     plocal.sort((a,b)=>a[0]-b[0]); //sort again on the x coordinate
   }
   return plocal;

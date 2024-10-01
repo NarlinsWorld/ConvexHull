@@ -3,11 +3,12 @@
 
 function setup() {
   createCanvas(400, 400);
-  let npts = 1000;
+  let npts = 100;
   let xmin = 50, xmax = 350, ymin = 50, ymax = 350, sortX_TF = true;
   let p = pointArray(npts, xmin, xmax, ymin, ymax, sortX_TF);
 
   //p = [[54,283],[122,248],[204,134],[219,180],[248,153],[284,349],[285,329],[291,212]]; //test data
+ 
 
   /*the points are sorted. abbreviate convex hull = CH(P)
   1) The leftmost point (1st one in the sorted list) is on the CH(P).
@@ -43,7 +44,7 @@ function setup() {
        P = Lu.length-1; //console.log("P=",P);
        B = Lu.length-2; //console.log("B=",B); 
        A = Lu.length-3; //console.log("A=",A); 
-       if (rightOrLeft(Lu[A],Lu[B],Lu[P]) == "LEFT"){Lu = axit(Lu,B);} else {condition = false;} 
+       if (rightOrLeft(Lu[A],Lu[B],Lu[P]) != "RIGHT"){Lu = axit(Lu,B);} else {condition = false;} 
        if(Lu.length <= 2){condition = false; //console.log("ended because Lu.length <=2");
         }
      }
@@ -68,7 +69,7 @@ for(let i=p.length-1; i>-1; i--){
        P = Ll.length-1; //console.log("P=",P);
        B = Ll.length-2; //console.log("B=",B); 
        A = Ll.length-3; //console.log("A=",A); 
-       if (rightOrLeft(Ll[A],Ll[B],Ll[P]) == "LEFT"){Ll = axit(Ll,B);} else {condition = false;} 
+       if (rightOrLeft(Ll[A],Ll[B],Ll[P]) != "RIGHT"){Ll = axit(Ll,B);} else {condition = false;} 
        if(Ll.length <= 2){condition = false; //console.log("ended because Ll.length <=2");
 
        }
