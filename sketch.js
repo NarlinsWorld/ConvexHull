@@ -3,11 +3,11 @@
 
 function setup() {
   createCanvas(400, 400);
-  let npts = 8;
+  let npts = 1000;
   let xmin = 50, xmax = 350, ymin = 50, ymax = 350, sortX_TF = true;
   let p = pointArray(npts, xmin, xmax, ymin, ymax, sortX_TF);
 
-  p = [[54,283],[122,248],[204,134],[219,180],[248,153],[284,349],[285,329],[291,212]]; //test data
+  //p = [[54,283],[122,248],[204,134],[219,180],[248,153],[284,349],[285,329],[291,212]]; //test data
 
   /*the points are sorted. abbreviate convex hull = CH(P)
   1) The leftmost point (1st one in the sorted list) is on the CH(P).
@@ -29,19 +29,64 @@ function setup() {
   14) return L  
   */
 
-  let Lu = [p[0],p[1]]; nLu=1; //nLu is the index
-  for (let i=2; i<p.length; i++){                      //step 3
-    Lu.push(p[i]);  nLu = nLu + 1;                                 //step 4
-    if (rightOrLeft(Lu[nLu-2],Lu[nLu-1],Lu[nLu]) != "RIGHT") { //is p[i] to the LEFT of segment (p[i-2],p[i-1]) step 5
-      let ar = Lu.splice(i-1,1); nLu=nLu-1;                           //step 6 remove p(i-1) frm Lu                                
-    } //end if
-    console.log('i=',i,' Lu=',Lu);
-    break;
-  } //end for i
+  let Lu = [p[0],p[1]]; //step 2
+  
 
- 
+  //step 3 thru 6
+  let t0; let A,B,P;
+  for(let i=2; i<p.length; i++){
+    Lu.push(p[i]);
+    t0 = Date.now(); //set time for while loop safety
+    condition = true;
+     while(condition){
+       if(Date.now()-t0 > 500){console.log("while loop timed out"); break;}
+       P = Lu.length-1; //console.log("P=",P);
+       B = Lu.length-2; //console.log("B=",B); 
+       A = Lu.length-3; //console.log("A=",A); 
+       if (rightOrLeft(Lu[A],Lu[B],Lu[P]) == "LEFT"){Lu = axit(Lu,B);} else {condition = false;} 
+       if(Lu.length <= 2){condition = false; //console.log("ended because Lu.length <=2");
+        }
+     }
+    //console.log('End while loop for i=',i)
+  }
+  
+//step 7. Put the points p(n) and p(n-1) in a list Llower, with p(n) as the first point.
+let q = []; j=0;
+for(let i=p.length-1; i>-1; i--){
+  q[j] = p[i];
+  j=j+1;
+}
 
+//steps 8 thru 11
+  let Ll=[q[0],q[1]];
+  for(let i=2; i<q.length; i++){
+    Ll.push(q[i]);
+    t0 = Date.now(); //set time for while loop safety
+    condition = true;
+     while(condition){
+       if(Date.now()-t0 > 500){console.log("while loop timed out"); break;}
+       P = Ll.length-1; //console.log("P=",P);
+       B = Ll.length-2; //console.log("B=",B); 
+       A = Ll.length-3; //console.log("A=",A); 
+       if (rightOrLeft(Ll[A],Ll[B],Ll[P]) == "LEFT"){Ll = axit(Ll,B);} else {condition = false;} 
+       if(Ll.length <= 2){condition = false; //console.log("ended because Ll.length <=2");
 
+       }
+     }
+    //console.log('End while loop for i=',i)
+  }
+  
+  //step 12 Remove the 1st and last point of Ll
+  Ll = axit(Ll,Ll.length-1);
+  Ll = axit(Ll,0);
+
+  //step 13 append Lu & Ll 
+  for (let i=0; i<Ll.length; i++){
+    Lu.push(Ll[i]);
+  }
+  //step 14 make list L for plotting
+  let L = Lu;
+  L.push(Lu[0]);
 
   background(220);
   translate(0, height);
@@ -50,18 +95,28 @@ function setup() {
   fill("white");
   circle(p[0][0], p[0][1], 10); //our first point
   
-  connectTheDots(Lu);
+  connectTheDots(L);
+  //connectTheDots(Ll);
 
-  //show the pts
-  for(let i=0; i<p.length; i++){
-    console.log(p[i]);
+  /*show the pts
+  for(let i=0; i<q.length; i++){
+    console.log(q[i]);
   }
-  
+  */
 
 
 }
 
 
-
-function draw() {
+/*function to remove 1 element from an array
+whenever the array looks like [[x1,y1],[x2,y2],[x3,y3] ...]
+*/
+axit = function (arr,index){
+  let temparr=[];
+  for(let i=0; i<arr.length; i++){
+    if(i != index){
+      temparr.push(arr[i]);
+    }
+  }
+  return temparr;
 }
