@@ -73,14 +73,14 @@ function _pointsSpiral(n, xmin, xmax, ymin, ymax) {
 
 
 
-// Draw all points(except superTriangle) onto the canvas.
+// Draw all points onto the canvas.
 // The point size is the 3rd argument of circle(x,y,size)
-function drawPts(ptsArr) {
+function drawPts(ptsArr,size=5) {
   let col = ["red", "blue", "black", "green"]; //point identification during development
   push();
   for (let i = 0; i < ptsArr.length; i++) {
     fill(col[i % 4]);
-    circle(ptsArr[i][0], ptsArr[i][1], 5);
+    circle(ptsArr[i][0], ptsArr[i][1], size);
   }
   pop();
 }
