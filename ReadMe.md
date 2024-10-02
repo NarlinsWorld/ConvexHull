@@ -1,12 +1,12 @@
 <h2>Convex Hull</h2>
 
-The javascript code is using the js.p5 library for canvas drawing. The number of data points is initially 100, and the user must click the Draw Hull button to see the canvas.  The randomly, selected type real, datapoints are graphed onto a 400 x 400 canvas and inside a range xmin = 50, xmax = 350, ymin = 50, ymax = 350.  
+The javascript code is using the js.p5 library for canvas drawing. The number of data points is initially 100, and the user must click the Draw Hull button to see the canvas.  The randomly selected, type real, datapoints are graphed onto a 400 x 400 canvas and inside a range xmin = 50, xmax = 350, ymin = 50, ymax = 350.  
 
-There is an error in the code such that if two points happen to be identical, then the convex hull will fail.  The program will continue to run, but an erronious drawing will appear.  Fortunately, using "real" random nummbers puts the probability for getting an identical pair at about zero. 
+There is an omission in the code such that if two points happen to be identical, then the convex hull will fail.  The program will continue to run, but an erroneous drawing will appear.  Fortunately, using "real" random numbers puts the probability for getting an identical pair at about zero, but if one were to use integer data, it might be needed to exclude duplicates. 
 
 The code runs pretty fast.  10,000 points can be drawn in about 8 ms.  That is the execution time for finding the convex hull, not counting the time to actually draw it.  It makes more sense to look at 10 to 50 points, where one doesn't just always get a nearly perfect rectangle for the hull.
 
-The method for coding comes from the textbook "computation Geometry" by Mark de Berg, Otfried Cheong, Marc van Kreveld and Mark Overmars. They provide pseudo-code for two different methods.  This is the second method.  The first one is quite slow.
+The method for coding comes from the textbook "Computational Geometry" by Mark de Berg, Otfried Cheong, Marc van Kreveld and Mark Overmars. They provide pseudo-code for two different methods.  This is the second method.  The first one is quite slow.
 
 <h2> Algorithm Overview</h2>
 
@@ -32,31 +32,31 @@ Let the 3 points be A,B,P from left to right.
 
 Since the point was to the right, we include it in our ongoing list for points on the upper Hull. 
 
-Now lets add the next point (219,180).
-<img src="Images/image2.png" width=200px>
+<br>Now lets add the next point (219,180).<br>
+<img src="Images/image2.png" width=300px><br>
 It is NOT to the right of the line and our instructions are to remove from our Hull list, the middle point of the last 3 points. That will make the Hull list be 
 $$Hull=(54, 283),(122,24),(219,180)$$ 
 and we redraw and add a new point.
 
-<img src="Images/image3.png" width=200px>
+<br><img src="Images/image3.png" width=300px><br>
 The new point continues to turn right, so we add it to the Hull and get another point.
 The latest point addition,(284,349), is clearly going to cause a sharp left turn.
-<img src="Images/image4.png" width=200px>
-By the rules, we delete the middle point of the last three. So (284,153) as to go.
-<img src="Images/image5.png" width=200px>
+<br><img src="Images/image4.png" width=300px><br>
+By the rules, we delete the middle point of the last three. So (284,153) has to go.
+<br><img src="Images/image5.png" width=300px><br>
 But now we see that the new last three points still turn left, so we delete the middle again.
-<img src="Images/image6.png" width=200px>
+<br><img src="Images/image6.png" width=300px><br>
 And still the last three points turn left. So we continue to delete the middle, but now we are down to only 2 points on the Hull. So we can finally add the next point from our list. 
-<img src="Images/image7.png" width=200px>
+<br><img src="Images/image7.png" width=300px><br>
 This one makes a right turn so we keep it and add the next point, which turns out to be the last one in our data set.
-<img src="Images/image8.png" width=200px>
+<br><img src="Images/image8.png" width=300px><br>
 
 This time, I can't look at the graph and tell whether the turn is to the left or right, but using the last three points, the determinant is positive, so the last turn must have been a left.  Ergo, we remove the middle point to get:
-<img src="Images/image9.png" width=200px>
+<br><img src="Images/image9.png" width=300px><br>
 
 This completes the upper hull and we have only two line segments. To do the lower hull, we start over on the right and go left, using all  of the points and beginning with the point (291,212) which we have determined is on the Hull.
 The procedure is the same and we must continue to turn right.  The completed Hull looks like this.
-<img src="Images/image10.png" width=200px>
+<br><img src="Images/image10.png" width=300px><br>
 
 
 
