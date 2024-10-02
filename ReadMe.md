@@ -16,3 +16,47 @@ The approach is go left to right across the field and find the upper hull.  Then
 
 Here is a small dataset which is already sorted.
 (54, 283),(122,24),(204,134),(219,180),(248,153),(284,349),(285,329),(291,212).
+We can graph the first three points, draw the line from the 1st to the 2nd, and ask if the 3rd point is to the left (above) or right (below) of the line.
+<img src="Images/image1.png" width=200px>
+
+So we could easily code at least this much and we need a function that will answer the question. Here is that function.
+
+Let the 3 points be A,B,P from left to right. 
+1) Create two vectors. 
+2) $$u = B-A = \binom{B_x -A_x}{B_y-A_y}$$
+   $$v = P-A = \binom{P_x - A_x}{P_y-A_y}$$
+3) Make these into a matrix and take its determinant:
+   $$det(M) = \left| \left( \begin{array}c u_x&v_x\\u_y&v_y \end{array}\right)\right| = u_x\cdot v_y - u_y\cdot v_x$$
+4) If the sign is negative, the point P is to the right.  If it is positive, the point P is to the left.  If it is zero, the point P is on the line.
+5) If you need an explanation of the math, look it up online.
+
+Since the point was to the right, we include it in our ongoing list for points on the upper Hull. 
+
+Now lets add the next point (219,180).
+<img src="Images/image2.png" width=200px>
+It is NOT to the right of the line and our instructions are to remove from our Hull list, the middle point of the last 3 points. That will make the Hull list be 
+$$Hull=(54, 283),(122,24),(219,180)$$ 
+and we redraw and add a new point.
+
+<img src="Images/image3.png" width=200px>
+The new point continues to turn right, so we add it to the Hull and get another point.
+The latest point addition,(284,349), is clearly going to cause a sharp left turn.
+<img src="Images/image4.png" width=200px>
+By the rules, we delete the middle point of the last three. So (284,153) as to go.
+<img src="Images/image5.png" width=200px>
+But now we see that the new last three points still turn left, so we delete the middle again.
+<img src="Images/image6.png" width=200px>
+And still the last three points turn left. So we continue to delete the middle, but now we are down to only 2 points on the Hull. So we can finally add the next point from our list. 
+<img src="Images/image7.png" width=200px>
+This one makes a right turn so we keep it and add the next point, which turns out to be the last one in our data set.
+<img src="Images/image8.png" width=200px>
+
+This time, I can't look at the graph and tell whether the turn is to the left or right, but using the last three points, the determinant is positive, so the last turn must have been a left.  Ergo, we remove the middle point to get:
+<img src="Images/image9.png" width=200px>
+
+This completes the upper hull and we have only two line segments. To do the lower hull, we start over on the right and go left, using all  of the points and beginning with the point (291,212) which we have determined is on the Hull.
+The procedure is the same and we must continue to turn right.  The completed Hull looks like this.
+<img src="Images/image10.png" width=200px>
+
+
+
