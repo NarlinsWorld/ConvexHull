@@ -50,7 +50,7 @@ function pointArray(npts, xmin, xmax, ymin, ymax, sortX_TF) { //if sortX_TF is t
       randomRealFromInterval(ymin, ymax)]);
   }
   if (sortX_TF){
-    plocal.sort((a,b)=>a[1]-b[1]); // reverse sort on the y coordinate in order to break any ties in x
+    plocal.sort((a,b)=>a[1]-b[1]); //  sort on the y coordinate in order to break any ties in x
     plocal.sort((a,b)=>a[0]-b[0]); //sort again on the x coordinate
   }
   return plocal;

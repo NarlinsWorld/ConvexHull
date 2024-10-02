@@ -13,8 +13,10 @@
   </head>
 
   <body>
-    <label id="nptsLabel">Number of Points:</label>
-    <input type="text" id="npts" value="100" size="25" onchange = "myFunc()" />
+    <label for="numberOfPoints">Number of Points:</label>
+    <input type="text" id="numberOfPoints"  value="100" size="25" />
+    <input type="button" id="doConvexHull" value="DrawHull"/> 
+    <p id="htmlOUT"></p>
     <script src="helperFunctions.js"></script>
     <script src="sketch.js"></script>
   </body>

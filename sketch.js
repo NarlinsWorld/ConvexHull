@@ -2,26 +2,23 @@
 
 
 function myFunc(){
-  return document.getElementById('npts').value;
-
+  npts = document.getElementById("numberOfPoints").value;
+  document.getElementById("htmlOUT").innerHTML = npts;
 }
 
-let npts;
-//document.getElementById("npts").addEventListener("change", myFunc,false);
+
+document.getElementById("numberOfPoints").addEventListener("change", myFunc,false);
+document.getElementById("doConvexHull").addEventListener("click", makeHull);
 
 function setup() {
-  
   createCanvas(400, 400);
+  myFunc();
 }
 
-function draw(){
-  console.log("npts=", npts);
-  makeHull();
-  noLoop();
-}
+
 
 function makeHull(){
-  npts = myFunc();
+  //npts = myFunc();
   
   let xmin = 50, xmax = 350, ymin = 50, ymax = 350, sortX_TF = true;
   let p = pointArray(npts, xmin, xmax, ymin, ymax, sortX_TF);
