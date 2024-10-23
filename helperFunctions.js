@@ -14,7 +14,7 @@ function rightOrLeft(A, B, P) {
   //A is the startingPoint of line AB
   //B is the endPoint of line AB
   //P is an arbitrary Point in the plane
-  // return LEFT is P is to the left of the line, else return right
+  // return LEFT if P is to the left of the line, else return right
   let u = [B[0] - A[0], B[1] - A[1]];
   let v = [P[0] - A[0], P[1] - A[1]];
   let det = u[0] * v[1] - u[1] * v[0];
