@@ -4,7 +4,7 @@ The javascript code is using the js.p5 library for canvas drawing. The number of
 
 There is an omission in the code such that if two points happen to be identical, then the convex hull will fail.  The program will continue to run, but an erroneous drawing will appear.  Fortunately, using "real" random numbers puts the probability for getting an identical pair at about zero, but if one were to use integer data, it might be needed to exclude duplicates. 
 
-The code runs pretty fast.  10,000 points can be drawn in about 8 ms.  That is the execution time for finding the convex hull, not counting the time to actually draw it.  It makes more sense to look at 10 to 50 points, where one doesn't just always get a nearly perfect rectangle for the hull.
+The code runs pretty fast.  10,000 points can be drawn in about 8 ms.  That is the execution time for finding the convex hull, not counting the time to actually draw it.  It makes more sense to look at 10 to 50 points, where one doesn't just always get a nearly perfect rectangle for the hull.  I believe that the perfect rectangle is caused by the "uniform" random distribution using Math.random to generate points.
 
 The method for coding comes from the textbook "Computational Geometry" by Mark de Berg, Otfried Cheong, Marc van Kreveld and Mark Overmars. They provide pseudo-code for two different methods.  This is the second method.  The first one is quite slow.
 
